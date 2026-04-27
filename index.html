@@ -849,73 +849,78 @@ if (modoCocina) {
 
 {ticket.map((t, i) => {
 
+  // 🔥 NO mostrar hijos sueltos
   if (t.esHijoMenu) return null;
 
   const menu = MENUS?.[t.ref];
 
   return (
-    <div key={i} className="border-b py-2">
+    <div key={i}>
 
-      <div className="flex items-start justify-between">
+      <div className="border-b py-2">
 
-        {/* IZQUIERDA */}
-        <div className="flex flex-col flex-1">
+        <div className="flex items-start justify-between">
 
-          <div className="text-xl font-bold leading-none">
-            {t.cantidad} x {t.ref}
-          </div>
+          {/* IZQUIERDA */}
+          <div className="flex flex-col flex-1">
 
-          <div className="text-[10px] text-gray-500 leading-none">
-            {t.nombre}
-          </div>
-
-          {menu && (
-            <div className="text-[10px] font-bold pl-2 mt-1 leading-tight">
-              {Object.keys(menu.items || {}).map(r => {
-                const mod = t.mods?.[r] ?? "";
-
-                return (
-                  <div
-                    key={r}
-                    onClick={() => editarSubMenu(t.ref, r)}
-                    className="cursor-pointer"
-                  >
-                    {r}{mod ? ` ${mod}` : ""}
-                  </div>
-                );
-              })}
+            <div className="text-xl font-bold leading-none">
+              {t.cantidad} x {t.ref}
             </div>
-          )}
 
-          {(t.nota || t.aceite || t.gluten || t.verdura || t.carne || t.huevo || t.marisco || t.frutossecos) && (
-            <div className="text-[10px] font-bold leading-tight">
-              {[
-                t.verdura && "NO VERDURA",
-                t.carne && "NO CARNE",
-                t.gluten && "SIN GLUTEN",
-                t.aceite && "ACEITE",
-                t.huevo && "NO HUEVO",
-                t.marisco && "ALERGIA MARISCO",
-                t.frutossecos && "ALERGIA FRUTOS SECOS",
-                t.nota
-              ].filter(Boolean).join(" / ")}
+            <div className="text-[10px] text-gray-500 leading-none">
+              {t.nombre}
             </div>
-          )}
 
-        </div>
+            {menu && (
+              <div className="text-[10px] font-bold pl-2 mt-1 leading-tight">
+                {Object.keys(menu.items || {}).map(r => {
+                  const mod = t.mods?.[r] ?? "";
 
-        {/* DERECHA */}
-        <div className="flex items-center gap-2 font-mono font-bold">
+                  return (
+                    <div
+                      key={r}
+                      onClick={() => editarSubMenu(t.ref, r)}
+                      className="cursor-pointer"
+                    >
+                      {r}{mod ? ` ${mod}` : ""}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
 
-          <div className="flex gap-1 text-sm">
-            <button onClick={(e) => { e.stopPropagation(); restar(t.ref); }}>➖</button>
-            <button onClick={(e) => { e.stopPropagation(); sumar(t.ref); }}>➕</button>
-            <button onClick={(e) => { e.stopPropagation(); eliminarLinea(t.ref); }}>❌</button>
-            <button onClick={(e) => { e.stopPropagation(); editarNota(t); }}>📝</button>
+            {(t.nota || t.aceite || t.gluten || t.verdura || t.carne || t.huevo || t.marisco || t.frutossecos) && (
+              <div className="text-[10px] font-bold leading-tight">
+                {[
+                  t.verdura && "NO VERDURA",
+                  t.carne && "NO CARNE",
+                  t.gluten && "SIN GLUTEN",
+                  t.aceite && "ACEITE",
+                  t.huevo && "NO HUEVO",
+                  t.marisco && "ALERGIA MARISCO",
+                  t.frutossecos && "ALERGIA FRUTOS SECOS",
+                  t.nota
+                ].filter(Boolean).join(" / ")}
+              </div>
+            )}
+
           </div>
 
-          <div className="text-right min-w-[60px]">
-            {(t.precio * t.cantidad).toFixed(2)}€
+          {/* DERECHA */}
+          <div className="flex items-center gap-2 font-mono font-bold">
+
+            <div className="flex gap-1 text-sm">
+              <button onClick={(e) => { e.stopPropagation(); restar(t.ref); }}>➖</button>
+              <button onClick={(e) => { e.stopPropagation(); sumar(t.ref); }}>➕</button>
+              <button onClick={(e) => { e.stopPropagation(); eliminarLinea(t.ref); }}>❌</button>
+              <button onClick={(e) => { e.stopPropagation(); editarNota(t); }}>📝</button>
+            </div>
+
+            <div className="text-right min-w-[60px]">
+              {(t.precio * t.cantidad).toFixed(2)}€
+            </div>
+
           </div>
 
         </div>
@@ -927,7 +932,8 @@ if (modoCocina) {
 
 })}
 
-      <div className="border-t mt-2 pt-2 flex justify-between font-bold">
+{/* 👇 ESTE BLOQUE VA FUERA DEL MAP */}
+<div className="border-t mt-2 pt-2 flex justify-between font-bold">
   <span>Total</span>
   <span>{total.toFixed(2)}€</span>
 </div>
