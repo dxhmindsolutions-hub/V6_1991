@@ -858,10 +858,10 @@ if (modoCocina) {
      <div className="flex items-start justify-between">
 
   {/* IZQUIERDA (ESTILO COCINA) */}
-  <div className="flex flex-col">
+ <div className="flex flex-col flex-1">
 
     {/* REF GRANDE */}
-    <div className="text-lg font-bold leading-none">
+    <div className="text-xl font-bold leading-none">
       {t.cantidad} x {t.ref}
     </div>
 
@@ -908,19 +908,25 @@ if (modoCocina) {
   </div>
 
   {/* DERECHA (PRECIO) */}
-  <div className="text-right font-mono font-bold">
+{/* DERECHA (BOTONES + PRECIO) */}
+<div className="flex items-center gap-2 font-mono font-bold">
+
+  {/* BOTONES INLINE */}
+  <div className="flex gap-1 text-sm">
+    <button onClick={() => restar(t.ref)}>➖</button>
+    <button onClick={() => sumar(t.ref)}>➕</button>
+    <button onClick={() => eliminarLinea(t.ref)}>❌</button>
+    <button onClick={() => editarNota(t)}>📝</button>
+  </div>
+
+  {/* PRECIO */}
+  <div className="text-right min-w-[60px]">
     {(t.precio * t.cantidad).toFixed(2)}€
   </div>
 
 </div>
 
-      {/* BOTONES */}
-      <div className="flex gap-1 mt-2">
-        <button onClick={() => restar(t.ref)}>➖</button>
-        <button onClick={() => sumar(t.ref)}>➕</button>
-        <button onClick={() => eliminarLinea(t.ref)}>❌</button>
-        <button onClick={() => editarNota(t)}>📝</button>
-      </div>
+     
 
     </div>
   );
