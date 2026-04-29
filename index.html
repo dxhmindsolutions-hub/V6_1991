@@ -738,73 +738,59 @@ if (modoCocina) {
     );
   }
 
-  // ====================
-  // 🧾 APP NORMAL
-  // ====================
-  return (
-    <div className="p-4 max-w-md mx-auto">
-      {/* HEADER */}
-<div className="flex justify-between mb-4">
-  <button onClick={()=>setMenuAbierto(true)} className="text-2xl">
-    ☰
-  </button>
+// ====================
+// 🧾 APP NORMAL
+// ====================
+return (
+  <div className="p-4 max-w-md mx-auto">
 
-  <h1 className="font-bold">Mini POS</h1>
+    {/* HEADER */}
+    <div className="flex justify-between items-center mb-4">
+      <button
+        onClick={() => setMenuAbierto(true)}
+        className="text-2xl"
+      >
+        ☰
+      </button>
 
-  <button onClick={()=>setModoGestion(true)}>⚙️</button>
-</div>
+      <h1 className="font-bold">Mini POS</h1>
 
-{/* OVERLAY */}
-{menuAbierto && (
-  <div
-    className="fixed inset-0 bg-black bg-opacity-40 z-40"
-    onClick={()=>setMenuAbierto(false)}
-  />
-)}
+      <button onClick={() => setModoGestion(true)}>
+        ⚙️
+      </button>
+    </div>
 
-{/* MENU LATERAL */}
-<div
-  className={`fixed top-0 left-0 w-64 h-full bg-white z-50 transform ${
-    menuAbierto ? "translate-x-0" : "-translate-x-full"
-  } transition duration-300 ease-in-out overflow-y-auto pb-10 shadow-lg`}
->
-  <div className="p-4 font-bold border-b">Categorías</div>
+    {/* OVERLAY */}
+    {menuAbierto && (
+      <div
+        className="fixed inset-0 bg-black bg-opacity-40 z-40"
+        onClick={() => setMenuAbierto(false)}
+      />
+    )}
 
-  {categorias.map(c => (
-    <button
-      key={c}
-      onClick={() => {
-        setCategoriaActiva(c);
-        setMenuAbierto(false);
-      }}
-      className={`block w-full text-left p-3 ${
-        categoriaActiva === c ? "bg-black text-white" : "bg-gray-100"
-      }`}
+    {/* MENU LATERAL */}
+    <div
+      className={`fixed top-0 left-0 w-64 h-full bg-white z-50 transform ${
+        menuAbierto ? "translate-x-0" : "-translate-x-full"
+      } transition duration-300 ease-in-out overflow-y-auto pb-10 shadow-lg`}
     >
-      {c}
-    </button>
-  ))}
-</div>
-  <div className="p-4 font-bold">Categorías</div>
+      <div className="p-4 font-bold border-b">Categorías</div>
 
-  {categorias.map(c => (
-    <button
-      key={c}
-      onClick={() => {
-        setCategoriaActiva(c);
-        setMenuAbierto(false);
-      }}
-      className={`block w-full text-left p-3 ${
-        categoriaActiva === c ? "bg-black text-white" : "bg-gray-100"
-      }`}
-    >
-      {c}
-    </button>
-  ))}
-</div>
-        <h1 className="font-bold">Mini POS</h1>
-        <button onClick={()=>setModoGestion(true)}>⚙️</button>
-      </div>
+      {categorias.map(c => (
+        <button
+          key={c}
+          onClick={() => {
+            setCategoriaActiva(c);
+            setMenuAbierto(false);
+          }}
+          className={`block w-full text-left p-3 ${
+            categoriaActiva === c ? "bg-black text-white" : "bg-gray-100"
+          }`}
+        >
+          {c}
+        </button>
+      ))}
+    </div>
 
       <div className="flex gap-2 mb-3">
 
