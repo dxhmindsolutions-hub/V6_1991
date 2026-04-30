@@ -386,19 +386,17 @@ if (MENUS[t.ref]) {
 
   });
 
+  resultado.push({
+    esMenu: true,
+    nombre: `${t.cantidad} x ${t.nombre}`,
+    lineas: refs
+  });
 
-      resultado.push({
-  esMenu: true,
-  nombre: `${t.cantidad} x ${t.nombre}`,
-  lineas: refs
-});
-
-    } 
-
-    // 🔹 PRODUCTO NORMAL
-    else {
-      resultado.push(t);
-    }
+} 
+// 🔹 PRODUCTO NORMAL
+else {
+  resultado.push(t);
+}
 
   });
 
