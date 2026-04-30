@@ -370,21 +370,21 @@ if (MENUS[t.ref]) {
 
   const menu = MENUS[t.ref];
 
-  const refs = menu.items.map(([r, mult]) => {
+ const refs = menu.items.map(([r, mult]) => {
 
-    const mod = t.mods?.[r];
-    const cantidad = t.cantidad * mult;
+  const mod = t.mods?.[r];
+  const cantidad = t.cantidad * mult;
 
-    if (!mod) return `${cantidad}x${r}`;
+  if (!mod) return `${cantidad}x${r}`;
 
-    const lineas = mod.split("\n");
+  const lineas = mod.split("\n");
 
-    return [
-      `${cantidad}x${r}  ${lineas[0]}`,
-      ...lineas.slice(1).map(l => `      ${l}`)
-    ].join("\n");
+  return [
+    `${cantidad}x${r}  ${lineas[0]}`,
+    ...lineas.slice(1).map(l => `      ${l}`)
+  ].join("\n");
 
-  });
+});
 
   resultado.push({
     esMenu: true,
