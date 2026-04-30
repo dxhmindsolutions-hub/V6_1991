@@ -288,76 +288,76 @@ const guardarArticulo = () => {
   const base = total / 1.1;
   const iva = total - base;
   const porPersona = comensales ? (total / comensales).toFixed(2) : null;
- const MENUS = {
+const MENUS = {
   "303": { // MENU 2A
-    items: {
-      "1": 1,
-      "4": 1,
-      "22": 1,
-      "58": 1,
-      "44": 1
-    }
+    items: [
+      ["1",1],
+      ["4",1],
+      ["22",1],
+      ["58",1],
+      ["44",1]
+    ]
   },
 
   "304": { // MENU 2B
-    items: {
-      "1": 1,
-      "4": 1,
-      "26": 1,
-      "65": 1,
-      "75": 1
-    }
+    items: [
+      ["1",1],
+      ["4",1],
+      ["26",1],
+      ["65",1],
+      ["75",1]
+    ]
   },
 
   "305": { // MENU 3P
-    items: {
-      "1": 1,
-      "4": 1.5,
-      "3": 1,
-      "22": 1,
-      "58": 1,
-      "44": 1,
-      "26": 1
-    }
+    items: [
+      ["1",1],
+      ["4",1.5],
+      ["3",1],
+      ["22",1],
+      ["58",1],
+      ["44",1],
+      ["26",1]
+    ]
   },
 
   "306": { // MENU 4P
-    items: {
-      "1": 1,
-      "4": 2,
-      "3": 1,
-      "22": 2,
-      "58": 2,
-      "65": 1,
-      "124": 1
-    }
+    items: [
+      ["1",1],
+      ["4",2],
+      ["3",1],
+      ["22",2],
+      ["58",2],
+      ["65",1],
+      ["124",1]
+    ]
   },
 
   "307": { // MENU 5P
-    items: {
-      "1": 2,
-      "4": 2.5,
-      "3": 1,
-      "22": 2,
-      "58": 2,
-      "37": 1,
-      "124": 1,
-      "65": 1
-    }
+    items: [
+      ["1",2],
+      ["4",2.5],
+      ["3",1],
+      ["22",2],
+      ["58",2],
+      ["37",1],
+      ["124",1],
+      ["65",1]
+    ]
   },
 
   "308": { // MENU 6P
-    items: {
-      "1": 3,
-      "4": 3,
-      "3": 1,
-      "22": 3,
-      "58": 2,
-      "37": 1,
-      "124": 1,
-      "65": 1,
-      "74": 1
-    }
+    items: [
+      ["1",3],
+      ["4",3],
+      ["3",1],
+      ["22",3],
+      ["58",2],
+      ["37",1],
+      ["124",1],
+      ["65",1],
+      ["74",1]
+    ]
   }
 };
  const itemsNuevosCocina = () => {
@@ -365,26 +365,28 @@ const guardarArticulo = () => {
 
   ticket.forEach(t => {
 
-    // 🔥 MENÚ → FORMATO CORTO
-    if (MENUS[t.ref]) {
+// 🔥 MENÚ → FORMATO CORTO
+if (MENUS[t.ref]) {
 
-      const menu = MENUS[t.ref];
+  const menu = MENUS[t.ref];
 
-const refs = Object.entries(menu.items).map(([r, mult]) => {
+  const refs = menu.items.map(([r, mult]) => {
 
-  const mod = t.mods?.[r];
-  const cantidad = t.cantidad * mult;
+    const mod = t.mods?.[r];
+    const cantidad = t.cantidad * mult;
 
-  if (!mod) return `${cantidad}x${r}`;
+    if (!mod) return `${cantidad}x${r}`;
 
-  const lineas = mod.split("\n");
+    const lineas = mod.split("\n");
 
-  return [
-    `${cantidad}x${r}  ${lineas[0]}`,
-    ...lineas.slice(1).map(l => `      ${l}`)
-  ].join("\n");
+    return [
+      `${cantidad}x${r}  ${lineas[0]}`,
+      ...lineas.slice(1).map(l => `      ${l}`)
+    ].join("\n");
 
-});
+  });
+
+}
 
       resultado.push({
   esMenu: true,
