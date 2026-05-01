@@ -24,45 +24,6 @@
 const { useState, useEffect } = React;
   
 const calcularHoraEntrega = (tiempoValor) => {
-  // 🔥 GUARDAR PEDIDO EN BLOQUE CORRECTO
-const guardarPedido = (nuevoTicket) => {
-  setTicket(nuevoTicket);
-
-  if (!pedidoNumero) return;
-
-  const tipo = tipoPedido === "comer" ? "salon" : tipoPedido;
-
-  setPedidos(prev => ({
-    ...prev,
-    [tipo]: {
-      ...prev[tipo],
-      [pedidoNumero]: {
-        ticket: nuevoTicket,
-        comensales,
-        telefono,
-        direccion,
-        zona,
-        metodoPago,
-        tiempo
-      }
-    }
-  }));
-};
-
-// 🔥 CERRAR PEDIDO
-const cerrarPedido = () => {
-  if (!pedidoNumero) return;
-
-  const tipo = tipoPedido === "comer" ? "salon" : tipoPedido;
-
-  const copia = { ...pedidos };
-  delete copia[tipo][pedidoNumero];
-
-  setPedidos(copia);
-
- guardarPedido([]);
-  setPedidoNumero("");
-};
   if (!tiempoValor) return "";
 
   const ahora = new Date();
@@ -80,7 +41,7 @@ const cerrarPedido = () => {
 
   return entrega.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 };
-
+  
 function POSApp() {
   // ✅ Hooks movidos dentro del componente
   const [numeroTicket, setNumeroTicket] = useState("");
@@ -108,13 +69,21 @@ function POSApp() {
 const [productoEditando, setProductoEditando] = useState(null);
 const [notaTemp, setNotaTemp] = useState("");
 const [checksTemp, setChecksTemp] = useState({
-  // 🔥 NUEVO SISTEMA DE PEDIDOS
+  aceite: false,
+  gluten: false,
+  verdura: false,
+  carne: false,
+  huevo: false,
+  marisco: false,
+  frutossecos: false
+});
+
 const [pedidos, setPedidos] = useState({
   salon: {},
   llevar: {},
   recoger: {}
 });
-
+  
 const [modoMesas, setModoMesas] = useState(false);
   
   
@@ -126,6 +95,44 @@ const [modoMesas, setModoMesas] = useState(false);
   marisco: false,
   frutossecos: false
 });
+
+  const guardarPedido = (nuevoTicket) => {
+  setTicket(nuevoTicket);
+
+  if (!pedidoNumero) return;
+
+  const tipo = tipoPedido === "comer" ? "salon" : tipoPedido;
+
+  setPedidos(prev => ({
+    ...prev,
+    [tipo]: {
+      ...prev[tipo],
+      [pedidoNumero]: {
+        ticket: nuevoTicket,
+        comensales,
+        telefono,
+        direccion,
+        zona,
+        metodoPago,
+        tiempo
+      }
+    }
+  }));
+};
+
+const cerrarPedido = () => {
+  if (!pedidoNumero) return;
+
+  const tipo = tipoPedido === "comer" ? "salon" : tipoPedido;
+
+  const copia = { ...pedidos };
+  delete copia[tipo][pedidoNumero];
+
+  setPedidos(copia);
+
+  guardarPedido([]);
+  setPedidoNumero("");
+};
   
   const exportarArticulos = () => {
   const dataStr = JSON.stringify(articulos, null, 2);
@@ -185,9 +192,6 @@ useEffect(() => {
   localStorage.setItem("pedidos", JSON.stringify(pedidos));
 }, [pedidos]);
 
-  useEffect(()=>{
-  if(tipoPedido === "comer"){
-    // 🔥 CARGAR PEDIDO AL ENTRAR
 useEffect(() => {
   if (!pedidoNumero) return;
 
@@ -206,12 +210,6 @@ useEffect(() => {
     setTicket([]);
   }
 }, [pedidoNumero, tipoPedido]);
-    setTelefono("");
-    setTiempo("");
-    setDireccion("");
-    setMetodoPago("");
-  }
-},[tipoPedido]);
   
   // AGREGAR ARTÍCULO
   const agregarArticulo = (ref) => {
