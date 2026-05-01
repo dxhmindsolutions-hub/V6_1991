@@ -187,6 +187,25 @@ useEffect(() => {
 
   useEffect(()=>{
   if(tipoPedido === "comer"){
+    // 🔥 CARGAR PEDIDO AL ENTRAR
+useEffect(() => {
+  if (!pedidoNumero) return;
+
+  const tipo = tipoPedido === "comer" ? "salon" : tipoPedido;
+  const pedido = pedidos[tipo]?.[pedidoNumero];
+
+  if (pedido) {
+    setTicket(pedido.ticket || []);
+    setComensales(pedido.comensales || "");
+    setTelefono(pedido.telefono || "");
+    setDireccion(pedido.direccion || "");
+    setZona(pedido.zona || "");
+    setMetodoPago(pedido.metodoPago || "");
+    setTiempo(pedido.tiempo || "");
+  } else {
+    setTicket([]);
+  }
+}, [pedidoNumero, tipoPedido]);
     setTelefono("");
     setTiempo("");
     setDireccion("");
@@ -794,6 +813,105 @@ if (modoCocina) {
     );
   }
 
+  // ====================
+// 🍽️ PANTALLA MESAS
+// ====================
+if (modoMesas) {
+  return (
+    <div className="p-3 space-y-6">
+
+      {/* SALÓN */}
+      <div>
+        <div className="font-bold mb-2">🍽️ SALÓN</div>
+        <div className="grid grid-cols-4 gap-2">
+          {Array.from({ length: 20 }, (_, i) => i + 1).map(n => {
+            const abierta = pedidos.salon[n];
+
+            return (
+              <button
+                key={n}
+                onClick={() => {
+                  setTipoPedido("comer");
+                  setPedidoNumero(String(n));
+                  setModoMesas(false);
+                }}
+                className={`p-4 rounded font-bold ${
+                  abierta ? "bg-green-500 text-white" : "bg-gray-200"
+                }`}
+              >
+                {n}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* LLEVAR */}
+      <div>
+        <div className="font-bold mb-2">🥡 LLEVAR</div>
+
+        <button
+          onClick={() => {
+            const id = Date.now().toString();
+            setTipoPedido("llevar");
+            setPedidoNumero(id);
+            setModoMesas(false);
+          }}
+          className="w-full bg-blue-500 text-white p-2 mb-2 rounded"
+        >
+          + Nuevo pedido
+        </button>
+
+        {Object.entries(pedidos.llevar).map(([id]) => (
+          <div
+            key={id}
+            onClick={() => {
+              setTipoPedido("llevar");
+              setPedidoNumero(id);
+              setModoMesas(false);
+            }}
+            className="p-2 bg-gray-200 mb-1 rounded"
+          >
+            Pedido {id}
+          </div>
+        ))}
+      </div>
+
+      {/* RECOGER */}
+      <div>
+        <div className="font-bold mb-2">🚶 RECOGER</div>
+
+        <button
+          onClick={() => {
+            const id = Date.now().toString();
+            setTipoPedido("recoger");
+            setPedidoNumero(id);
+            setModoMesas(false);
+          }}
+          className="w-full bg-orange-500 text-white p-2 mb-2 rounded"
+        >
+          + Nuevo pedido
+        </button>
+
+        {Object.entries(pedidos.recoger).map(([id, p]) => (
+          <div
+            key={id}
+            onClick={() => {
+              setTipoPedido("recoger");
+              setPedidoNumero(id);
+              setModoMesas(false);
+            }}
+            className="p-2 bg-gray-200 mb-1 rounded"
+          >
+            {p.telefono || "Cliente"} ({id})
+          </div>
+        ))}
+      </div>
+
+    </div>
+  );
+}
+
 // ====================
 // 🧾 APP NORMAL
 // ====================
@@ -811,6 +929,10 @@ return (
 
       <h1 className="font-bold">Mini POS</h1>
 
+    <button onClick={() => setModoMesas(true)}>
+  🍽️
+</button>
+      
       <button onClick={() => setModoGestion(true)}>
         ⚙️
       </button>
@@ -1012,6 +1134,13 @@ return (
   <span>Total</span>
   <span>{total.toFixed(2)}€</span>
 </div>
+
+    <button
+  onClick={cerrarPedido}
+  className="w-full bg-red-600 text-white p-3 rounded mt-2"
+>
+  ❌ Cerrar pedido
+</button>
 
    <div className="flex gap-2 mt-3">
 
