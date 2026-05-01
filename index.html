@@ -78,6 +78,13 @@ const [checksTemp, setChecksTemp] = useState({
   frutossecos: false
 });
 
+  const volverInicio = () => {
+  setModoMesas(false);
+  setModoCocina(false);
+  setModoTicket(false);
+  setModoGestion(false);
+};
+
 const [pedidos, setPedidos] = useState({
   salon: {},
   llevar: {},
@@ -908,33 +915,44 @@ if (modoMesas) {
 return (
   <div className="p-4 max-w-md mx-auto">
 
-    {/* HEADER */}
-    <div className="flex justify-between items-center mb-4">
-      <button
-        onClick={() => setMenuAbierto(true)}
-        className="text-2xl"
-      >
-        ☰
-      </button>
+   {/* HEADER */}
+<div className="flex justify-between items-center mb-4">
 
-      <h1 className="font-bold">Mini POS</h1>
+  {/* ☰ menú lateral */}
+  <button
+    onClick={() => setMenuAbierto(true)}
+    className="text-2xl"
+  >
+    ☰
+  </button>
 
-    <button onClick={() => setModoMesas(true)}>
-  🍽️
-</button>
-      
-      <button onClick={() => setModoGestion(true)}>
-        ⚙️
-      </button>
-    </div>
+  {/* 🏠 HOME */}
+  <button
+    onClick={() => {
+      setModoMesas(false);
+      setModoCocina(false);
+      setModoTicket(false);
+      setModoGestion(false);
+      setMenuAbierto(false);
+    }}
+    className="text-2xl"
+  >
+    🏠
+  </button>
 
-    {/* OVERLAY */}
-    {menuAbierto && (
-      <div
-        className="fixed inset-0 bg-black bg-opacity-40 z-40"
-        onClick={() => setMenuAbierto(false)}
-      />
-    )}
+  <h1 className="font-bold">Mini POS</h1>
+
+  {/* 🍽️ MESAS */}
+  <button onClick={() => setModoMesas(true)}>
+    🍽️
+  </button>
+
+  {/* ⚙️ GESTIÓN */}
+  <button onClick={() => setModoGestion(true)}>
+    ⚙️
+  </button>
+
+</div>
 
     {/* MENU LATERAL */}
     <div
