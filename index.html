@@ -813,16 +813,33 @@ if (modoCocina) {
   // ====================
 // 🍽️ PANTALLA MESAS
 // ====================
-if (modoMesas) {
-  return (
-    <div className="p-3 space-y-6">
+{/* HEADER MESAS */}
+<div className="flex items-center justify-between mb-4">
 
-      <button
-  onClick={() => setModoMesas(false)}
-  className="mb-4 text-2xl"
->
-  ← Volver
-</button>
+  <button
+    onClick={() => setModoMesas(false)}
+    className="text-2xl"
+  >
+    ←
+  </button>
+
+  <div className="font-bold text-lg">
+    MESAS
+  </div>
+
+  <button
+    onClick={() => {
+      setModoMesas(false);
+      setModoCocina(false);
+      setModoTicket(false);
+      setModoGestion(false);
+    }}
+    className="text-2xl"
+  >
+    🏠
+  </button>
+
+</div>
 
       {/* SALÓN */}
       <div>
