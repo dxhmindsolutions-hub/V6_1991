@@ -24,6 +24,45 @@
 const { useState, useEffect } = React;
   
 const calcularHoraEntrega = (tiempoValor) => {
+  // 🔥 GUARDAR PEDIDO EN BLOQUE CORRECTO
+const guardarPedido = (nuevoTicket) => {
+  guardarPedido((nuevoTicket);
+
+  if (!pedidoNumero) return;
+
+  const tipo = tipoPedido === "comer" ? "salon" : tipoPedido;
+
+  setPedidos(prev => ({
+    ...prev,
+    [tipo]: {
+      ...prev[tipo],
+      [pedidoNumero]: {
+        ticket: nuevoTicket,
+        comensales,
+        telefono,
+        direccion,
+        zona,
+        metodoPago,
+        tiempo
+      }
+    }
+  }));
+};
+
+// 🔥 CERRAR PEDIDO
+const cerrarPedido = () => {
+  if (!pedidoNumero) return;
+
+  const tipo = tipoPedido === "comer" ? "salon" : tipoPedido;
+
+  const copia = { ...pedidos };
+  delete copia[tipo][pedidoNumero];
+
+  setPedidos(copia);
+
+ guardarPedido([]);
+  setPedidoNumero("");
+};
   if (!tiempoValor) return "";
 
   const ahora = new Date();
@@ -69,6 +108,14 @@ function POSApp() {
 const [productoEditando, setProductoEditando] = useState(null);
 const [notaTemp, setNotaTemp] = useState("");
 const [checksTemp, setChecksTemp] = useState({
+  // 🔥 NUEVO SISTEMA DE PEDIDOS
+const [pedidos, setPedidos] = useState({
+  salon: {},
+  llevar: {},
+  recoger: {}
+});
+
+const [modoMesas, setModoMesas] = useState(false);
   
   
   aceite: false,
@@ -128,6 +175,16 @@ setArticulos(data);
     localStorage.setItem("articulos", JSON.stringify(articulos));
   }, [articulos]);
 
+  // 🔥 GUARDAR PEDIDOS
+useEffect(() => {
+  const data = localStorage.getItem("pedidos");
+  if (data) setPedidos(JSON.parse(data));
+}, []);
+
+useEffect(() => {
+  localStorage.setItem("pedidos", JSON.stringify(pedidos));
+}, [pedidos]);
+
   useEffect(()=>{
   if(tipoPedido === "comer"){
     setTelefono("");
@@ -147,7 +204,7 @@ setArticulos(data);
     const artMenu = articulos[ref];
 
     // 👉 añadir línea del menú (visible en pantalla)
-    setTicket(prev => [
+    guardarPedido(prev => [
       ...prev,
      {
   ref,
@@ -174,7 +231,7 @@ setArticulos(data);
       return;
     }
 
-    setTicket([
+    guardarPedido([
       ...ticket,
       {
         ref: "0",
@@ -195,26 +252,26 @@ setArticulos(data);
   if (i !== -1) {
     const copia = [...ticket];
     copia[i].cantidad++;
-    setTicket(copia);
+    guardarPedido(copia);
   } else {
-    setTicket([...ticket, { ref, ...art, cantidad: 1 }]);
+    guardarPedido([...ticket, { ref, ...art, cantidad: 1 }]);
   }
 };
 
   // CONTROLES TICKET
   const sumar = (ref) => {
-    setTicket(ticket.map(t => t.ref === ref ? {...t, cantidad: t.cantidad+1} : t));
+    guardarPedido(ticket.map(t => t.ref === ref ? {...t, cantidad: t.cantidad+1} : t));
   };
 
   const restar = (ref) => {
-    setTicket(ticket
+    guardarPedido(ticket
       .map(t => t.ref === ref ? {...t, cantidad: t.cantidad-1} : t)
       .filter(t => t.cantidad > 0));
   };
 
   const eliminarLinea = (ref) => {
     if (!confirm("¿Eliminar producto del ticket?")) return;
-    setTicket(ticket.filter(t => t.ref !== ref));
+    guardarPedido(ticket.filter(t => t.ref !== ref));
   };
 
  const editarNota = (item) => {
@@ -1111,7 +1168,7 @@ return (
             <div className="flex gap-2 mt-4">
               <button
                 onClick={() => {
-                  setTicket(ticket.map(t =>
+                  guardarPedido(ticket.map(t =>
                     t === productoEditando
                       ? {
                           ...t,
@@ -1192,7 +1249,7 @@ return (
               notaTemp
             ].filter(Boolean).join("\n");
 
-            setTicket(ticket.map(t => {
+            guardarPedido(ticket.map(t => {
               if (t.ref === subMenuEditando.menuRef && t.esMenuPadre) {
                 return {
                   ...t,
