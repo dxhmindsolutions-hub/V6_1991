@@ -814,32 +814,37 @@ if (modoCocina) {
 // 🍽️ PANTALLA MESAS
 // ====================
 {/* HEADER MESAS */}
-<div className="flex items-center justify-between mb-4">
+if (modoMesas) {
+  return (
+    <div className="p-3 space-y-6">
 
-  <button
-    onClick={() => setModoMesas(false)}
-    className="text-2xl"
-  >
-    ←
-  </button>
+      {/* HEADER MESAS */}
+      <div className="flex items-center justify-between mb-4">
 
-  <div className="font-bold text-lg">
-    MESAS
-  </div>
+        <button
+          onClick={() => setModoMesas(false)}
+          className="text-2xl"
+        >
+          ←
+        </button>
 
-  <button
-    onClick={() => {
-      setModoMesas(false);
-      setModoCocina(false);
-      setModoTicket(false);
-      setModoGestion(false);
-    }}
-    className="text-2xl"
-  >
-    🏠
-  </button>
+        <div className="font-bold text-lg">
+          MESAS
+        </div>
 
-</div>
+        <button
+          onClick={() => {
+            setModoMesas(false);
+            setModoCocina(false);
+            setModoTicket(false);
+            setModoGestion(false);
+          }}
+          className="text-2xl"
+        >
+          🏠
+        </button>
+
+      </div>
 
       {/* SALÓN */}
       <div>
