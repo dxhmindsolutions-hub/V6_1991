@@ -120,6 +120,15 @@ const [modoMesas, setModoMesas] = useState(false);
 const cerrarPedido = () => {
   if (!pedidoNumero) return;
 
+  // 🔥 CONFIRMACIÓN
+  const mensaje =
+    tipoPedido === "comer"
+      ? `¿Cerrar mesa ${pedidoNumero}?`
+      : "¿Cancelar este pedido?";
+
+  const ok = confirm(mensaje);
+  if (!ok) return;
+
   const tipo = tipoPedido === "comer" ? "salon" : tipoPedido;
 
   setPedidos(prev => {
@@ -137,10 +146,9 @@ const cerrarPedido = () => {
   setTicket([]);
   setPedidoNumero("");
 
-  // 🔥 salir a mesas (esto te faltaba)
+  // 🔥 volver a mesas
   setModoMesas(true);
 };
-  
   const exportarArticulos = () => {
   const dataStr = JSON.stringify(articulos, null, 2);
   const blob = new Blob([dataStr], { type: "application/json" });
