@@ -1272,38 +1272,36 @@ return (
       <option>1h 30min</option>
     </select>
 
-    {/* 🔥 BOTONES DENTRO */}
-    <div className="flex gap-2">
+  {/* 🔥 BOTONES PAGO */}
+<div className="flex gap-2">
 
-      <button
-        onClick={()=>setMetodoPago("EFECTIVO")}
-        className={`w-1/2 p-2 rounded ${
-          metodoPago === "EFECTIVO" ? "bg-green-600 text-white" : "bg-gray-200"
-        }`}
-      >
-        💵 Efectivo
-      </button>
+  <button
+    onClick={()=>setMetodoPago("EFECTIVO")}
+    className={`w-1/2 p-2 rounded ${
+      metodoPago === "EFECTIVO" ? "bg-green-600 text-white" : "bg-gray-200"
+    }`}
+  >
+    💵 Efectivo
+  </button>
 
-      <button
-        onClick={()=>setMetodoPago("VISA")}
-        className={`w-1/2 p-2 rounded ${
-          metodoPago === "VISA" ? "bg-blue-600 text-white" : "bg-gray-200"
-        }`}
-      >
-        💳 Visa
-      </button>
-      
-    <button
+  <button
+    onClick={()=>setMetodoPago("VISA")}
+    className={`w-1/2 p-2 rounded ${
+      metodoPago === "VISA" ? "bg-blue-600 text-white" : "bg-gray-200"
+    }`}
+  >
+    💳 Visa
+  </button>
+
+</div>
+
+{/* 🔥 CERRAR PEDIDO ABAJO DEL TODO */}
+<button
   onClick={cerrarPedido}
-  className="w-full bg-red-600 text-white p-3 rounded mt-2"
+  className="w-full bg-red-600 text-white p-3 rounded mt-2 font-bold"
 >
   ❌ Cerrar pedido
 </button>
-
-    </div>
-
-  </div>
-)}
       {/* 🔥 MODAL NOTAS */}
       {productoEditando && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
