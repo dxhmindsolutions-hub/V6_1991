@@ -1371,7 +1371,7 @@ return (
         </div>
       )}
 
-      {subMenuEditando && (
+     {subMenuEditando && (
   <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
     <div className="bg-white p-4 rounded-xl w-80">
 
@@ -1385,30 +1385,6 @@ return (
         onChange={e => setNotaTemp(e.target.value)}
         className="w-full border p-2 mb-3"
       />
-
-      {[
-        ["aceite", "ACEITE"],
-        ["gluten", "SIN GLUTEN"],
-        ["verdura", "NO VERDURA"],
-        ["carne", "NO CARNE"],
-        ["huevo", "NO HUEVO"],
-        ["marisco", "ALERGIA MARISCO"],
-        ["frutossecos", "ALERGIA FRUTOS SECOS"]
-      ].map(([key, label]) => (
-        <div key={key} className="flex justify-between items-center mb-1">
-          <span>{label}</span>
-          <input
-            type="checkbox"
-            checked={checksTemp[key]}
-            onChange={() =>
-              setChecksTemp({
-                ...checksTemp,
-                [key]: !checksTemp[key]
-              })
-            }
-          />
-        </div>
-      ))}
 
       <div className="flex gap-2 mt-4">
         <button
@@ -1448,7 +1424,7 @@ return (
           onClick={() => setSubMenuEditando(null)}
           className="w-1/2 bg-gray-400 text-white p-2 rounded"
         >
-         CANCELAR
+          CANCELAR
         </button>
       </div>
 
