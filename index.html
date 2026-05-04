@@ -309,16 +309,16 @@ useEffect(() => {
     const artMenu = articulos[ref];
 
     // 👉 añadir línea del menú (visible en pantalla)
-    guardarPedido(prev => [
-      ...prev,
-     {
-  ref,
-  ...artMenu,
-  cantidad: 1,
-  esMenuPadre: true,
-  mods: {} // 🔥 AQUÍ GUARDAMOS MODIFICACIONES POR REF
-}
-    ]);
+ guardarPedido([
+  ...ticket,
+  {
+    ref,
+    ...artMenu,
+    cantidad: 1,
+    esMenuPadre: true,
+    mods: {}
+  }
+]);
 
     return;
   }
@@ -1434,6 +1434,9 @@ return (
   </div>
 )}
 } // 👈 CIERRE de POSApp
+    
+ const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<POSApp />);   
     
   // =========================
   // Registrar Service Worker
