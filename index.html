@@ -1302,76 +1302,78 @@ return (
 >
   ❌ Cerrar pedido
 </button>
-      {/* 🔥 MODAL NOTAS */}
-      {productoEditando && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-4 rounded-xl w-80">
+    {/* 🔥 MODAL NOTAS */}
+{productoEditando && (
+  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div className="bg-white p-4 rounded-xl w-80">
 
-            <div className="font-bold mb-2">MODIFICACIONES</div>
+      <div className="font-bold mb-2">MODIFICACIONES</div>
 
-            <input
-              placeholder="NOTA..."
-              value={notaTemp}
-              onChange={e => setNotaTemp(e.target.value)}
-              className="w-full border p-2 mb-3"
-            />
+      <input
+        placeholder="NOTA..."
+        value={notaTemp}
+        onChange={e => setNotaTemp(e.target.value)}
+        className="w-full border p-2 mb-3"
+      />
 
-            {[
-              ["aceite", "ACEITE"],
-              ["gluten", "SIN GLUTEN"],
-              ["verdura", "NO VERDURA"],
-              ["carne", "NO CARNE"],
-              ["huevo", "NO HUEVO"],
-              ["marisco", "ALERGIA MARISCO"],
-              ["frutossecos", "ALERGIA FRUTOS SECOS"]
-            ].map(([key, label]) => (
-              <div key={key} className="flex justify-between items-center mb-1">
-                <span>{label}</span>
-                <input
-                  type="checkbox"
-                  checked={checksTemp[key]}
-                  onChange={() =>
-                    setChecksTemp({
-                      ...checksTemp,
-                      [key]: !checksTemp[key]
-                    })
-                  }
-                />
-              </div>
-            ))}
-
-            <div className="flex gap-2 mt-4">
-              <button
-                onClick={() => {
-                  guardarPedido(ticket.map(t =>
-                    t === productoEditando
-                      ? {
-                          ...t,
-                          nota: notaTemp,
-                          ...checksTemp
-                        }
-                      : t
-                  ));
-                  setProductoEditando(null);
-                }}
-                className="w-1/2 bg-green-600 text-white p-2 rounded"
-              >
-                GUARDAR
-              </button>
-
-              <button
-                onClick={() => setProductoEditando(null)}
-                className="w-1/2 bg-gray-400 text-white p-2 rounded"
-              >
-                CANCELAR
-              </button>
-            </div>
-
-          </div>
+      {[
+        ["aceite", "ACEITE"],
+        ["gluten", "SIN GLUTEN"],
+        ["verdura", "NO VERDURA"],
+        ["carne", "NO CARNE"],
+        ["huevo", "NO HUEVO"],
+        ["marisco", "ALERGIA MARISCO"],
+        ["frutossecos", "ALERGIA FRUTOS SECOS"]
+      ].map(([key, label]) => (
+        <div key={key} className="flex justify-between items-center mb-1">
+          <span>{label}</span>
+          <input
+            type="checkbox"
+            checked={checksTemp[key]}
+            onChange={() =>
+              setChecksTemp({
+                ...checksTemp,
+                [key]: !checksTemp[key]
+              })
+            }
+          />
         </div>
-      )}
+      ))}
 
-     {subMenuEditando && (
+      <div className="flex gap-2 mt-4">
+        <button
+          onClick={() => {
+            guardarPedido(
+              ticket.map(t =>
+                t === productoEditando
+                  ? {
+                      ...t,
+                      nota: notaTemp,
+                      ...checksTemp
+                    }
+                  : t
+              )
+            );
+            setProductoEditando(null);
+          }}
+          className="w-1/2 bg-green-600 text-white p-2 rounded"
+        >
+          GUARDAR
+        </button>
+
+        <button
+          onClick={() => setProductoEditando(null)}
+          className="w-1/2 bg-gray-400 text-white p-2 rounded"
+        >
+          CANCELAR
+        </button>
+      </div>
+
+    </div>
+  </div>
+)}
+
+{subMenuEditando && (
   <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
     <div className="bg-white p-4 rounded-xl w-80">
 
@@ -1398,20 +1400,24 @@ return (
               checksTemp.marisco && "ALERGIA MARISCO",
               checksTemp.frutossecos && "ALERGIA FRUTOS SECOS",
               notaTemp
-            ].filter(Boolean).join("\n");
+            ]
+              .filter(Boolean)
+              .join("\n");
 
-            guardarPedido(ticket.map(t => {
-              if (t.ref === subMenuEditando.menuRef && t.esMenuPadre) {
-                return {
-                  ...t,
-                  mods: {
-                    ...t.mods,
-                    [subMenuEditando.subRef]: texto.toUpperCase()
-                  }
-                };
-              }
-              return t;
-            }));
+            guardarPedido(
+              ticket.map(t => {
+                if (t.ref === subMenuEditando.menuRef && t.esMenuPadre) {
+                  return {
+                    ...t,
+                    mods: {
+                      ...t.mods,
+                      [subMenuEditando.subRef]: texto.toUpperCase()
+                    }
+                  };
+                }
+                return t;
+              })
+            );
 
             setSubMenuEditando(null);
           }}
@@ -1432,7 +1438,7 @@ return (
   </div>
 )}
 
-</div> 
+</div>
 );
 } // cierre de POSApp
 
