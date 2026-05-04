@@ -1376,7 +1376,6 @@ return (
 {subMenuEditando && (
   <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
     <div className="bg-white p-4 rounded-xl w-80">
-
       <div className="font-bold mb-2">
         MODIFICAR {subMenuEditando.subRef}
       </div>
@@ -1400,9 +1399,7 @@ return (
               checksTemp.marisco && "ALERGIA MARISCO",
               checksTemp.frutossecos && "ALERGIA FRUTOS SECOS",
               notaTemp
-            ]
-              .filter(Boolean)
-              .join("\n");
+            ].filter(Boolean).join("\n");
 
             guardarPedido(
               ticket.map(t => {
@@ -1433,14 +1430,14 @@ return (
           CANCELAR
         </button>
       </div>
-
     </div>
   </div>
 )}
 
-</div>
-)}
-);
+  </div>   {/* 👈 cierre del div principal */}
+)}         {/* 👈 cierre del AND (MUY IMPORTANTE) */}
+
+);         {/* 👈 cierre del return */}
 
 ReactDOM.createRoot(document.getElementById("root")).render(<POSApp />);
 
