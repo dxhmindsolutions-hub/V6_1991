@@ -55,6 +55,7 @@ function POSApp() {
   const [modoGestion, setModoGestion] = useState(false);
   const [modoTicket, setModoTicket] = useState(false);
   const [modoCocina, setModoCocina] = useState(false);
+  const [modoAbiertos, setModoAbiertos] = useState(false);
   const [subMenuEditando, setSubMenuEditando] = useState(null);
   const [tipoPedido, setTipoPedido] = useState("comer"); // comer | llevar | recoger
  const [telefono, setTelefono] = useState("");
@@ -185,7 +186,7 @@ setArticulos(data);
     "Entrantes","Sopas","Arroces","Tallarines","Fideos","Huevos y verduras",
     "Otras Sugerencias","Ternera","Pollo","Cerdo","Pato","Langostinos","Calamares",
     "Tailandesa","Para Variar","Para Compartir","Tentempiés","Bebidas","Café & Té",
-    "Postres","Bar","Domicilo","Varios"
+    "Postres","Bar","Domicilio","Varios"
   ];
 
   useEffect(() => {
@@ -301,7 +302,9 @@ useEffect(() => {
   
   // AGREGAR ARTÍCULO
   const agregarArticulo = (ref) => {
-  if (!pedidoNumero) return alert("Introduce mesa");
+if (!pedidoNumero && tipoPedido === "comer") {
+  return alert("Introduce mesa");
+}
 
   // 🔥 1. SI ES MENÚ → AÑADIR MENÚ + HIJOS
   if (MENUS[ref]) {
@@ -368,11 +371,17 @@ useEffect(() => {
     guardarPedido(ticket.map(t => t.ref === ref ? {...t, cantidad: t.cantidad+1} : t));
   };
 
-  const restar = (ref) => {
-    guardarPedido(ticket
-      .map(t => t.ref === ref ? {...t, cantidad: t.cantidad-1} : t)
-      .filter(t => t.cantidad > 0));
-  };
+  const restar = (index) => {
+  guardarPedido(
+    ticket
+      .map((t, i) =>
+        i === index
+          ? { ...t, cantidad: t.cantidad - 1 }
+          : t
+      )
+      .filter(t => t.cantidad > 0)
+  );
+};
 
   const eliminarLinea = (ref) => {
     if (!confirm("¿Eliminar producto del ticket?")) return;
