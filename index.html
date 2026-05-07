@@ -440,7 +440,7 @@ const guardarArticulo = () => {
     ...articulos,
     [ref]: {
       nombre: nuevo.nombre,
-      precio: parseFloat(nuevo.precio),
+      precio: parseFloat(nuevo.precio) || 0,
       categoria: nuevo.categoria
     }
   });
@@ -458,7 +458,10 @@ const guardarArticulo = () => {
   const total = ticket.reduce((s, t) => s + t.precio * t.cantidad, 0);
   const base = total / 1.1;
   const iva = total - base;
-  const porPersona = comensales ? (total / comensales).toFixed(2) : null;
+  const porPersona =
+  Number(comensales) > 0
+    ? (total / Number(comensales)).toFixed(2)
+    : null;
   
  const itemsNuevosCocina = () => {
   let resultado = [];
@@ -809,7 +812,6 @@ if (modoCocina) {
     a.nombre.toLowerCase().includes(busquedaGestion.toLowerCase()) ||
     ref.includes(busquedaGestion)
   )
-  .sort((a,b)=>Number(a[0]) - Number(b[0]))
   .map(([ref,a])=>(
             <div key={ref} className="p-3 border-b flex justify-between items-center">
              <div className="flex items-center gap-3">
@@ -1342,7 +1344,7 @@ return (
           <span>{label}</span>
           <input
             type="checkbox"
-            checked={checksTemp[key]}
+            checked={!!checksTemp[key]}
             onChange={() =>
               setChecksTemp({
                 ...checksTemp,
