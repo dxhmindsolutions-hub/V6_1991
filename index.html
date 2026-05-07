@@ -94,7 +94,7 @@ const [pedidos, setPedidos] = useState({
   
 const [modoMesas, setModoMesas] = useState(false);
   
- const guardarPedido = (nuevoTicket = ticket) => {
+const guardarPedido = (nuevoTicket = ticket) => {
   setTicket(nuevoTicket);
 
   if (!pedidoNumero) return;
@@ -211,18 +211,6 @@ useEffect(() => {
 useEffect(() => {
   if (!pedidoNumero) return;
 
-  useEffect(() => {
-  if (!pedidoNumero) return;
-
-  guardarPedido(ticket);
-}, [
-  telefono,
-  direccion,
-  zona,
-  metodoPago,
-  tiempo,
-  comensales
-]);
 
   const tipo = tipoPedido === "comer" ? "salon" : tipoPedido;
   const pedido = pedidos[tipo]?.[pedidoNumero];
