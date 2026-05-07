@@ -1222,7 +1222,7 @@ return (
     </div>
   )}
 
-   {(tipoPedido === "comer" || tipoPedido === "llevar" || tipoPedido === "recoger") && (
+   {(tipoPedido === "llevar" || tipoPedido === "recoger") && (
   <div className="space-y-2 mb-4">
 
     <div className="flex gap-2">
@@ -1307,16 +1307,18 @@ return (
 
 </div>
 
-{/* 🔥 CERRAR PEDIDO ABAJO DEL TODO */}
-<button
+     </div>
+)}
+
+    <button
   onClick={cerrarPedido}
   className="w-full bg-red-600 text-white p-3 rounded mt-2 font-bold"
 >
-  ❌ Cerrar pedido
+  {tipoPedido === "comer"
+    ? "❌ Cerrar mesa"
+    : "❌ Cerrar pedido"}
 </button>
-
-     </div>
-)}
+    
     
     {/* 🔥 MODAL NOTAS */}
 {productoEditando && (
